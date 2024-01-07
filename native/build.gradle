@@ -29,9 +29,10 @@ dependencies {
 
     implementation group: 'org.ballerinalang', name: 'ballerina-lang', version: "${ballerinaLangVersion}"
     implementation group: 'org.ballerinalang', name: 'ballerina-runtime', version: "${ballerinaLangVersion}"
+    implementation group: 'org.ballerinalang', name: 'value', version: "${ballerinaLangVersion}"
     implementation group: 'com.jayway.jsonpath', name: 'json-path', version: "${javaJsonPathVersion}"
     implementation group: 'net.minidev', name: 'json-smart', version: "${javaJsonSmartVersion}"
-    implementation group: 'net.minidev', name: 'json-smart', version: "${javaAccessorsSmartVersion}"
+    implementation group: 'com.jayway.jsonpath', name: 'json-path', version: '2.4.0'
 }
 
 checkstyle {

@@ -4,7 +4,9 @@ import com.jayway.jsonpath.JsonPath;
 import com.jayway.jsonpath.JsonPathException;
 import com.jayway.jsonpath.PathNotFoundException;
 import io.ballerina.runtime.api.utils.JsonUtils;
+import io.ballerina.runtime.api.utils.StringUtils;
 import io.ballerina.runtime.api.values.BError;
+import io.ballerina.runtime.api.values.BObject;
 import io.ballerina.runtime.api.values.BString;
 import net.minidev.json.JSONValue;
 
@@ -19,6 +21,19 @@ public class BJsonPath {
         } catch (PathNotFoundException e) {
             BError cause = Utils.createError(e.getMessage());
             return Utils.createError(Utils.getCanNotExecuteQueryErrorMessage(query), cause);
+        } catch (IllegalArgumentException | JsonPathException e) {
+            return Utils.createError(e.getMessage());
+        }
+    }
+
+    public static Object read2(Object json, BObject query) {
+        try {
+            Object result = JsonPath.parse(json.toString()).read(StringUtils.getStringValue(query, null));
+            return JsonUtils.parse(JSONValue.toJSONString(result));
+        } catch (PathNotFoundException e) {
+            BError cause = Utils.createError(e.getMessage());
+            return Utils.createError(Utils.getCanNotExecuteQueryErrorMessage(StringUtils.
+                fromString(StringUtils.getStringValue(query, null))), cause);
         } catch (IllegalArgumentException | JsonPathException e) {
             return Utils.createError(e.getMessage());
         }

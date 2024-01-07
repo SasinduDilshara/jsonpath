@@ -22,4 +22,5 @@ module io.ballerina.xlibb.jsonpath {
     requires json.path;
     requires json.smart;
     requires accessors.smart;
+    requires io.ballerina.lang.value;
 }
