@@ -2,7 +2,7 @@
 org = "crates"
 name = "jsonpath"
 version = "1.0.2"
-distribution = "2201.2.0"
+distribution = "2201.7.0"
 authors = ["Mohamed Sabthar (@MohamedSabthar)"]
 repository = "https://github.com/MohamedSabthar/jsonpath"
 license = ["Apache-2.0"]
