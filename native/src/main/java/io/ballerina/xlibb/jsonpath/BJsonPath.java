@@ -28,12 +28,12 @@ public class BJsonPath {
 
     public static Object read2(Object json, BObject query) {
         try {
-            Object result = JsonPath.parse(json.toString()).read(StringUtils.getStringValue(query, null));
+            Object result = JsonPath.parse(json.toString()).read(StringUtils.getStringValue(query));
             return JsonUtils.parse(JSONValue.toJSONString(result));
         } catch (PathNotFoundException e) {
             BError cause = Utils.createError(e.getMessage());
             return Utils.createError(Utils.getCanNotExecuteQueryErrorMessage(StringUtils.
-                fromString(StringUtils.getStringValue(query, null))), cause);
+                fromString(StringUtils.getStringValue(query))), cause);
         } catch (IllegalArgumentException | JsonPathException e) {
             return Utils.createError(e.getMessage());
         }
