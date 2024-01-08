@@ -10,13 +10,19 @@ import io.ballerina.runtime.api.values.BObject;
 import io.ballerina.runtime.api.values.BString;
 import net.minidev.json.JSONValue;
 
+import static com.jayway.jsonpath.JsonPath.using;
+import static io.ballerina.xlibb.jsonpath.BaseTest.BJSON_CONFIGURATION;
+
 /**
  * Provides native function implementation of json-path.
  */
 public class BJsonPath {
     public static Object read(Object json, BString query) {
         try {
-            Object result = JsonPath.parse(json.toString()).read(query.getValue());
+            Object result = using(BJSON_CONFIGURATION)
+                    .parse(json.toString())
+                    .read(query.getValue());
+//            Object result = JsonPath.parse(json.toString()).read(query.getValue());
             return JsonUtils.parse(JSONValue.toJSONString(result));
         } catch (PathNotFoundException e) {
             BError cause = Utils.createError(e.getMessage());
@@ -28,7 +34,12 @@ public class BJsonPath {
 
     public static Object read2(Object json, BObject query) {
         try {
-            Object result = JsonPath.parse(json.toString()).read(StringUtils.getStringValue(query));
+            Object result = using(BJSON_CONFIGURATION)
+                    .parse(json)
+                    .read(StringUtils.getStringValue(query));
+            System.out.println("SOUT:- \n" + using(BJSON_CONFIGURATION)
+                    .parse(json) + "\n");
+//            Object result = JsonPath.parse(json.toString()).read(StringUtils.getStringValue(query));
             return JsonUtils.parse(JSONValue.toJSONString(result));
         } catch (PathNotFoundException e) {
             BError cause = Utils.createError(e.getMessage());

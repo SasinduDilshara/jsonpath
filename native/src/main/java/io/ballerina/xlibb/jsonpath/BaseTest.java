@@ -3,7 +3,7 @@ package io.ballerina.xlibb.jsonpath;
 import com.jayway.jsonpath.Configuration;
 
 public class BaseTest {
-    public static final Configuration JAKARTA_JSON_CONFIGURATION = Configuration
+    public static final Configuration BJSON_CONFIGURATION = Configuration
             .builder()
             .mappingProvider(new BJsonMappingProvider())
             .jsonProvider(new BJsonProvider())

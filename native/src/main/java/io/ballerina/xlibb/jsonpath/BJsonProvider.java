@@ -3,6 +3,7 @@ package io.ballerina.xlibb.jsonpath;
 import com.jayway.jsonpath.InvalidJsonException;
 import com.jayway.jsonpath.JsonPathException;
 import com.jayway.jsonpath.spi.json.AbstractJsonProvider;
+import io.ballerina.runtime.api.TypeTags;
 import io.ballerina.runtime.api.creators.ValueCreator;
 import io.ballerina.runtime.api.PredefinedTypes;
 import io.ballerina.runtime.api.types.Type;
@@ -12,6 +13,7 @@ import io.ballerina.runtime.api.utils.ValueUtils;
 import io.ballerina.runtime.api.values.BArray;
 import io.ballerina.runtime.api.values.BMap;
 import io.ballerina.runtime.api.values.BString;
+import io.ballerina.runtime.api.values.BValue;
 
 import java.io.InputStream;
 import java.math.BigDecimal;
@@ -114,10 +116,10 @@ public class BJsonProvider extends AbstractJsonProvider {
             throw new UnsupportedOperationException();
         } else {
             BMap jsonObject = toJsonObject(obj);
-            if (!jsonObject.containsKey(key)) {
+            if (!jsonObject.containsKey(StringUtils.fromString(key))) {
                 return UNDEFINED;
             } else {
-                return unwrap(jsonObject.get(key));
+                return unwrap(jsonObject.get(StringUtils.fromString(key)));
             }
         }
     }
@@ -229,7 +231,10 @@ public class BJsonProvider extends AbstractJsonProvider {
     }
 
     private Object createJsonElement(final Object o) {
-        return ValueUtils.convert(o, PredefinedTypes.TYPE_JSON);
+        if (o instanceof String) {
+            return JsonUtils.convertToJson(StringUtils.fromString((String) o));
+        }
+        return JsonUtils.convertToJson(o);
     }
 
     private BArray toJsonArray(final Object o) {
