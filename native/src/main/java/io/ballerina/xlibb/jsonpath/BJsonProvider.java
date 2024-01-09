@@ -10,10 +10,7 @@ import io.ballerina.runtime.api.types.Type;
 import io.ballerina.runtime.api.utils.JsonUtils;
 import io.ballerina.runtime.api.utils.StringUtils;
 import io.ballerina.runtime.api.utils.ValueUtils;
-import io.ballerina.runtime.api.values.BArray;
-import io.ballerina.runtime.api.values.BMap;
-import io.ballerina.runtime.api.values.BString;
-import io.ballerina.runtime.api.values.BValue;
+import io.ballerina.runtime.api.values.*;
 
 import java.io.InputStream;
 import java.math.BigDecimal;
@@ -199,8 +196,11 @@ public class BJsonProvider extends AbstractJsonProvider {
         } else if (isArray(obj)) {
             targetType = PredefinedTypes.TYPE_JSON_ARRAY;
         } else if (obj instanceof BString) {
-            targetType = PredefinedTypes.TYPE_STRING;
             obj = StringUtils.getStringValue(obj);
+            targetType = PredefinedTypes.TYPE_STRING;
+        //TODO: Check similar types
+        } else if (obj instanceof BDecimal) {
+            targetType = PredefinedTypes.TYPE_FLOAT;
         } else if (obj instanceof String) {
             targetType = PredefinedTypes.TYPE_STRING;
         } else if (obj instanceof Boolean) {
@@ -208,6 +208,7 @@ public class BJsonProvider extends AbstractJsonProvider {
         } else if (obj instanceof Long || obj instanceof Integer) {
             targetType = PredefinedTypes.TYPE_INT;
         } else if (obj instanceof BigDecimal) {
+            //TODO: ALL Decimal places
             targetType = PredefinedTypes.TYPE_JSON_DECIMAL;
         } else if (obj instanceof Double) {
             targetType = PredefinedTypes.TYPE_JSON_FLOAT;
