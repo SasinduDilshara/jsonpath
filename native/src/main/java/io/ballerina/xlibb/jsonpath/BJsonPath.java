@@ -8,7 +8,6 @@ import io.ballerina.runtime.api.utils.StringUtils;
 import io.ballerina.runtime.api.values.BError;
 import io.ballerina.runtime.api.values.BObject;
 import io.ballerina.runtime.api.values.BString;
-import net.minidev.json.JSONValue;
 
 import static com.jayway.jsonpath.JsonPath.using;
 import static io.ballerina.xlibb.jsonpath.BaseTest.BJSON_CONFIGURATION;
@@ -23,7 +22,7 @@ public class BJsonPath {
                     .parse(json.toString())
                     .read(query.getValue());
 //            Object result = JsonPath.parse(json.toString()).read(query.getValue());
-            return JsonUtils.parse(JSONValue.toJSONString(result));
+            return JsonUtils.parse(result.toString());
         } catch (PathNotFoundException e) {
             BError cause = Utils.createError(e.getMessage());
             return Utils.createError(Utils.getCanNotExecuteQueryErrorMessage(query), cause);
@@ -37,10 +36,8 @@ public class BJsonPath {
             Object result = using(BJSON_CONFIGURATION)
                     .parse(json)
                     .read(StringUtils.getStringValue(query));
-            System.out.println("SOUT:- \n" + using(BJSON_CONFIGURATION)
-                    .parse(json) + "\n");
 //            Object result = JsonPath.parse(json.toString()).read(StringUtils.getStringValue(query));
-            return JsonUtils.parse(JSONValue.toJSONString(result));
+            return result;
         } catch (PathNotFoundException e) {
             BError cause = Utils.createError(e.getMessage());
             return Utils.createError(Utils.getCanNotExecuteQueryErrorMessage(StringUtils.

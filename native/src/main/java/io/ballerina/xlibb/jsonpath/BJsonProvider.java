@@ -205,7 +205,10 @@ public class BJsonProvider extends AbstractJsonProvider {
             targetType = PredefinedTypes.TYPE_STRING;
         } else if (obj instanceof Boolean) {
             targetType = PredefinedTypes.TYPE_BOOLEAN;
-        } else if (obj instanceof Long || obj instanceof Integer) {
+        } else if (obj instanceof Long) {
+            targetType = PredefinedTypes.TYPE_INT;
+        } else if (obj instanceof Integer) {
+            obj = ((Integer) obj).longValue();
             targetType = PredefinedTypes.TYPE_INT;
         } else if (obj instanceof BigDecimal) {
             //TODO: ALL Decimal places
