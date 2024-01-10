@@ -187,6 +187,7 @@ public class BJsonProvider extends AbstractJsonProvider {
     }
 
     public Object unwrap(Object obj) {
+        //TODO: TypeUtils.getType
         if (obj == null) {
             return null;
         }
