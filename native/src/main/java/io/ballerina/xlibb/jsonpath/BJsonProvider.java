@@ -219,7 +219,6 @@ public class BJsonProvider extends AbstractJsonProvider {
         } else {
             targetType = PredefinedTypes.TYPE_ANY;
         }
-
         return JsonUtils.convertJSON(obj, targetType);
     }
 

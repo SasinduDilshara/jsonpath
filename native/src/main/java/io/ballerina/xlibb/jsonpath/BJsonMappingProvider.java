@@ -67,26 +67,18 @@ public class BJsonMappingProvider implements MappingProvider {
         if (source instanceof Boolean) {
             if (Boolean.class.equals(targetType)) {
                 return JsonUtils.convertJSON(source, PredefinedTypes.TYPE_BOOLEAN);
-//                boolean value = ((Boolean) source);
-//                if (value) {
-//                    return Boolean.TRUE;
-//                } else {
-//                    return Boolean.FALSE;
-//                }
             } else {
                 throw new MappingException("JSON boolean cannot be mapped to " + className);
             }
         } else if (source instanceof String) {
             if (String.class.equals(targetType)) {
                 return JsonUtils.convertJSON(source, PredefinedTypes.TYPE_STRING);
-//                return source.toString();
             } else {
                 throw new MappingException("JSON String cannot be mapped to " + className);
             }
         } else if (source instanceof BString) {
             if (String.class.equals(targetType)) {
                 return StringUtils.fromString(JsonUtils.convertJSON(source, PredefinedTypes.TYPE_STRING).toString());
-//                return StringUtils.getStringValue(source);
             } else {
                 throw new MappingException("JSON String cannot be mapped to " + className);
             }
@@ -128,28 +120,6 @@ public class BJsonMappingProvider implements MappingProvider {
             return null;
         }
         return JsonUtils.convertJSON(obj, TypeUtils.getType(obj));
-//        io.ballerina.runtime.api.types.Type targetType;
-//        if (isMap(obj)) {
-//            targetType = PredefinedTypes.TYPE_MAP;
-//        } else if (isArray(obj)) {
-//            targetType = PredefinedTypes.TYPE_JSON_ARRAY;
-//        } else if (obj instanceof BString) {
-//            targetType = PredefinedTypes.TYPE_STRING;
-//            obj = StringUtils.getStringValue(obj);
-//        } else if (obj instanceof String) {
-//            targetType = PredefinedTypes.TYPE_STRING;
-//        } else if (obj instanceof Boolean) {
-//            targetType = PredefinedTypes.TYPE_BOOLEAN;
-//        } else if (obj instanceof Long || obj instanceof Integer) {
-//            targetType = PredefinedTypes.TYPE_INT;
-//        } else if (obj instanceof BigDecimal) {
-//            targetType = PredefinedTypes.TYPE_DECIMAL;
-//        } else if (obj instanceof Double) {
-//            targetType = PredefinedTypes.TYPE_FLOAT;
-//            //TODO: Check other types
-//        } else {
-//            targetType = PredefinedTypes.TYPE_ANY;
-//        }
     }
 
     private io.ballerina.runtime.api.types.Type getTargetType(Class<?> targetType) {
@@ -180,9 +150,9 @@ public class BJsonMappingProvider implements MappingProvider {
             Type[] args = ((ParameterizedType) targetType).getActualTypeArguments();
             if (args != null && args.length > 0) {
                 if (args[0] instanceof Class) {
-                    return (Class<?>) args[0];
+                    return args[0];
                 } else if (args[0] instanceof ParameterizedType) {
-                    return (ParameterizedType) args[0];
+                    return args[0];
                 }
             }
         }
@@ -196,11 +166,11 @@ public class BJsonMappingProvider implements MappingProvider {
                 Collection<Object> coll = (Collection<Object>) newNoArgInstance(collectionType);
                 return coll;
             } else if (List.class.isAssignableFrom(collectionType)) {
-                return new java.util.LinkedList<Object>();
+                return new java.util.LinkedList<>();
             } else if (Set.class.isAssignableFrom(collectionType)) {
-                return new java.util.LinkedHashSet<Object>();
+                return new java.util.LinkedHashSet<>();
             } else if (Queue.class.isAssignableFrom(collectionType)) {
-                return new java.util.LinkedList<Object>();
+                return new java.util.LinkedList<>();
             }
         }
         String className = collectionType.getSimpleName();

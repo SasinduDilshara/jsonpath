@@ -21,7 +21,6 @@ public class BJsonPath {
             Object result = using(BJSON_CONFIGURATION)
                     .parse(json.toString())
                     .read(query.getValue());
-//            Object result = JsonPath.parse(json.toString()).read(query.getValue());
             return JsonUtils.parse(result.toString());
         } catch (PathNotFoundException e) {
             BError cause = Utils.createError(e.getMessage());
@@ -33,11 +32,9 @@ public class BJsonPath {
 
     public static Object read2(Object json, BObject query) {
         try {
-            Object result = using(BJSON_CONFIGURATION)
+            return using(BJSON_CONFIGURATION)
                     .parse(json)
                     .read(StringUtils.getStringValue(query));
-//            Object result = JsonPath.parse(json.toString()).read(StringUtils.getStringValue(query));
-            return result;
         } catch (PathNotFoundException e) {
             BError cause = Utils.createError(e.getMessage());
             return Utils.createError(Utils.getCanNotExecuteQueryErrorMessage(StringUtils.
