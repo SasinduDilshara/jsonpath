@@ -1,6 +1,6 @@
 import ballerina/test;
 
-final readonly&json value = {
+final readonly & json value = {
   "event": {
     "name":"Bond Movies",
     "movies": [
@@ -32,7 +32,9 @@ final readonly&json value = {
 isolated function testQuery() returns error? {
     json result = check readJson(value, `$.event.movies`);
     // json|Error result = read(value, "$.event.movies");
-    test:assertEquals(result, <json[]> [
+    test:assertTrue(result is json);
+    test:assertTrue(result is json[]);
+    test:assertEquals(result.toString(), (<json[]> [
     {
       "name": "Licence to Kill",
       "star": "Timothy Dalton",
@@ -53,7 +55,7 @@ isolated function testQuery() returns error? {
       "star": "Daniel Craig",
       "rating": 7.8
     }
-]);
+]).toString());
 }
 
 @test:Config {}
@@ -101,4 +103,24 @@ isolated function testQuery5() returns error? {
     "rating": 7.8
   }
 ]);
+}
+
+@test:Config {}
+function testQuery6() returns error? {
+    json result = check readJson(value, `$..movies.length()`);
+    test:assertEquals(result, 4);
+}
+
+@test:Config {}
+function testQuery7() returns error? {
+    json result = check readJson(value, `$.max($.event.movies..rating)`);
+    test:assertEquals(result, 7.8);
+}
+
+@test:Config {}
+function testQuery8() returns error? {
+    json result = check readJson(value, `$..rating.avg()`);
+    test:assertEquals(result, 28.1/4);
+    string a = string `${"`"}`;
+    string aa = string `\u{0060}`;
 }
