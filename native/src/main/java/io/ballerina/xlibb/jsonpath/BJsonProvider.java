@@ -3,13 +3,11 @@ package io.ballerina.xlibb.jsonpath;
 import com.jayway.jsonpath.InvalidJsonException;
 import com.jayway.jsonpath.JsonPathException;
 import com.jayway.jsonpath.spi.json.AbstractJsonProvider;
-import io.ballerina.runtime.api.TypeTags;
 import io.ballerina.runtime.api.creators.ValueCreator;
 import io.ballerina.runtime.api.PredefinedTypes;
 import io.ballerina.runtime.api.types.Type;
 import io.ballerina.runtime.api.utils.JsonUtils;
 import io.ballerina.runtime.api.utils.StringUtils;
-import io.ballerina.runtime.api.utils.ValueUtils;
 import io.ballerina.runtime.api.values.*;
 
 import java.io.InputStream;
