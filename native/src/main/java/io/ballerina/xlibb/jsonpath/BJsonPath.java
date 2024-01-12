@@ -3,6 +3,7 @@ package io.ballerina.xlibb.jsonpath;
 import com.jayway.jsonpath.JsonPath;
 import com.jayway.jsonpath.JsonPathException;
 import com.jayway.jsonpath.PathNotFoundException;
+import com.jayway.jsonpath.internal.JsonContext;
 import io.ballerina.runtime.api.utils.JsonUtils;
 import io.ballerina.runtime.api.utils.StringUtils;
 import io.ballerina.runtime.api.values.BError;
@@ -19,7 +20,7 @@ public class BJsonPath {
     public static Object read(Object json, BString query) {
         try {
             Object result = using(BJSON_CONFIGURATION)
-                    .parse(json.toString())
+                    .parse(json)
                     .read(query.getValue());
             return JsonUtils.parse(result.toString());
         } catch (PathNotFoundException e) {
