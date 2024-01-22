@@ -1,45 +1,28 @@
 package io.ballerina.xlibb.jsonpath;
 
-import com.jayway.jsonpath.JsonPath;
 import com.jayway.jsonpath.JsonPathException;
 import com.jayway.jsonpath.PathNotFoundException;
-import com.jayway.jsonpath.internal.JsonContext;
-import io.ballerina.runtime.api.utils.JsonUtils;
 import io.ballerina.runtime.api.utils.StringUtils;
 import io.ballerina.runtime.api.values.BError;
 import io.ballerina.runtime.api.values.BObject;
-import io.ballerina.runtime.api.values.BString;
 
 import static com.jayway.jsonpath.JsonPath.using;
 import static io.ballerina.xlibb.jsonpath.BaseTest.BJSON_CONFIGURATION;
+import static io.ballerina.xlibb.jsonpath.Utils.convertRawTemplateToString;
 
 /**
  * Provides native function implementation of json-path.
  */
 public class BJsonPath {
-    public static Object read(Object json, BString query) {
-        try {
-            Object result = using(BJSON_CONFIGURATION)
-                    .parse(json)
-                    .read(query.getValue());
-            return JsonUtils.parse(result.toString());
-        } catch (PathNotFoundException e) {
-            BError cause = Utils.createError(e.getMessage());
-            return Utils.createError(Utils.getCanNotExecuteQueryErrorMessage(query), cause);
-        } catch (IllegalArgumentException | JsonPathException e) {
-            return Utils.createError(e.getMessage());
-        }
-    }
-
     public static Object read2(Object json, BObject query) {
         try {
             return using(BJSON_CONFIGURATION)
                     .parse(json)
-                    .read(StringUtils.getStringValue(query));
+                    .read(convertRawTemplateToString(query));
         } catch (PathNotFoundException e) {
             BError cause = Utils.createError(e.getMessage());
             return Utils.createError(Utils.getCanNotExecuteQueryErrorMessage(StringUtils.
-                fromString(StringUtils.getStringValue(query))), cause);
+                fromString(convertRawTemplateToString(query))), cause);
         } catch (IllegalArgumentException | JsonPathException e) {
             return Utils.createError(e.getMessage());
         }

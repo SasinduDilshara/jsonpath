@@ -22,8 +22,12 @@ import io.ballerina.runtime.api.Environment;
 import io.ballerina.runtime.api.Module;
 import io.ballerina.runtime.api.creators.ErrorCreator;
 import io.ballerina.runtime.api.utils.StringUtils;
+import io.ballerina.runtime.api.values.BArray;
 import io.ballerina.runtime.api.values.BError;
+import io.ballerina.runtime.api.values.BObject;
 import io.ballerina.runtime.api.values.BString;
+
+import static io.ballerina.runtime.api.utils.StringUtils.fromString;
 
 /**
  * Utility functions of JsonPath module.
@@ -53,5 +57,24 @@ public class Utils {
 
     public static String getCanNotExecuteQueryErrorMessage(BString query) {
         return "Unable to execute query '" + query.getValue() + "' on the provided JSON value";
+    }
+
+    public static String convertRawTemplateToString(BObject rawTemplate) {
+        BArray insertionsArray = rawTemplate.getArrayValue(fromString("insertions"));
+        BArray stringsArray = rawTemplate.getArrayValue(fromString("strings"));
+        if (stringsArray.size() == 0) {
+            return "";
+        } else {
+            long insertionLength = insertionsArray.getLength();
+            String query = stringsArray.getBString(0).getValue();
+            for (int i = 1; i < stringsArray.size(); i++) {
+                String templatedString = "";
+                if (i - 1 < insertionLength) {
+                    templatedString = StringUtils.getStringValue(insertionsArray.get(i - 1));
+                }
+                query += templatedString + stringsArray.getBString(i).getValue();
+            }
+            return query;
+        }
     }
 }

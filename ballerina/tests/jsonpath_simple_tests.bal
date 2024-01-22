@@ -31,31 +31,30 @@ final readonly & json value = {
 @test:Config {}
 isolated function testQuery() returns error? {
     json result = check readJson(value, `$.event.movies`);
-    // json|Error result = read(value, "$.event.movies");
     test:assertTrue(result is json);
     test:assertTrue(result is json[]);
-    test:assertEquals(result.toString(), (<json[]> [
-    {
-      "name": "Licence to Kill",
-      "star": "Timothy Dalton",
-      "rating": 6.6
-    },
-    {
-      "name": "GoldenEye",
-      "star": "Pierce Brosnan",
-      "rating": 7.2
-    },
-    {
-      "name": "Tomorrow Never Dies",
-      "star": "Pierce Brosnan",
-      "rating": 6.5
-    },
-    {
-      "name": "Skyfall",
-      "star": "Daniel Craig",
-      "rating": 7.8
-    }
-]).toString());
+    test:assertEquals(result, (<json[]> [
+        {
+          "name": "Licence to Kill",
+          "star": "Timothy Dalton",
+          "rating": 6.6
+        },
+        {
+          "name": "GoldenEye",
+          "star": "Pierce Brosnan",
+          "rating": 7.2
+        },
+        {
+          "name": "Tomorrow Never Dies",
+          "star": "Pierce Brosnan",
+          "rating": 6.5
+        },
+        {
+          "name": "Skyfall",
+          "star": "Daniel Craig",
+          "rating": 7.8
+        }
+    ]));
 }
 
 @test:Config {}
@@ -74,17 +73,17 @@ isolated function testQuery3() returns error? {
 isolated function testQuery4() returns error? {
     json result = check readJson(value, `$.event.movies[?(@.rating>7)]`);
     test:assertEquals(result, <json[]>[
-  {
-    "name": "GoldenEye",
-    "star": "Pierce Brosnan",
-    "rating": 7.2
-  },
-  {
-    "name": "Skyfall",
-    "star": "Daniel Craig",
-    "rating": 7.8
-  }
-]);
+      {
+        "name": "GoldenEye",
+        "star": "Pierce Brosnan",
+        "rating": 7.2
+      },
+      {
+        "name": "Skyfall",
+        "star": "Daniel Craig",
+        "rating": 7.8
+      }
+    ]);
 }
 
 @test:Config {}
@@ -92,17 +91,17 @@ isolated function testQuery5() returns error? {
   int a = 7;
     json result = check readJson(value, `$.event.movies[?(@.rating>${a})]`);
     test:assertEquals(result, <json[]>[
-  {
-    "name": "GoldenEye",
-    "star": "Pierce Brosnan",
-    "rating": 7.2
-  },
-  {
-    "name": "Skyfall",
-    "star": "Daniel Craig",
-    "rating": 7.8
-  }
-]);
+        {
+          "name": "GoldenEye",
+          "star": "Pierce Brosnan",
+          "rating": 7.2
+        },
+        {
+          "name": "Skyfall",
+          "star": "Daniel Craig",
+          "rating": 7.8
+        }
+    ]);
 }
 
 @test:Config {}
@@ -121,6 +120,4 @@ function testQuery7() returns error? {
 function testQuery8() returns error? {
     json result = check readJson(value, `$..rating.avg()`);
     test:assertEquals(result, 28.1/4);
-    string a = string `${"`"}`;
-    string aa = string `\u{0060}`;
 }
