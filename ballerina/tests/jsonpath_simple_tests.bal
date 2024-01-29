@@ -31,7 +31,6 @@ final readonly & json value = {
 @test:Config {}
 isolated function testQuery() returns error? {
     json result = check readJson(value, `$.event.movies`);
-    test:assertTrue(result is json);
     test:assertTrue(result is json[]);
     test:assertEquals(result, (<json[]> [
         {

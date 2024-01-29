@@ -152,6 +152,40 @@ json j4 = {
     a3: []
 };
 
+json j5 = {
+    a1: {
+        a1: i1
+    },
+    a2: {
+        a1: d1
+    },
+    a3: {
+        a1: f1
+    },
+    a4: {
+        a1: b1
+    },
+    a5: {
+        a1: s1
+    },
+    a6: {
+        a1: n1
+    }
+};
+
+json j6 = {
+    a1: [d1, d2, d3, d4, d5, d6],
+    a2: [f1, f2, f3, f4, f5, f6],
+    a3: [i1, i2, i3, i4, i5, i6],
+    a4: [n1, n2, n3],
+    a5: [s1, s2, s3, s4, s5, s6],
+    a6: [b1, b2, b3, b4, b5, b6],
+    a7: {
+        a1: [s2],
+        a2: s2
+    }
+};
+
 function getInt() returns int {
     return i1;
 };
