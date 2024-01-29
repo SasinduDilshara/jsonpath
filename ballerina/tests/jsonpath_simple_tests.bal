@@ -1,3 +1,19 @@
+// Copyright (c) 2024 WSO2 LLC (http://www.wso2.org) All Rights Reserved.
+//
+// WSO2 Inc. licenses this file to you under the Apache License,
+// Version 2.0 (the "License"); you may not use this file except
+// in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing,
+// software distributed under the License is distributed on an
+// "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+// KIND, either express or implied.  See the License for the
+// specific language governing permissions and limitations
+// under the License.
+
 import ballerina/test;
 
 final readonly & json value = {
@@ -30,7 +46,7 @@ final readonly & json value = {
 
 @test:Config {}
 isolated function testQuery() returns error? {
-    json result = check readJson(value, `$.event.movies`);
+    json result = check read(value, `$.event.movies`);
     test:assertTrue(result is json[]);
     test:assertEquals(result, (<json[]> [
         {
@@ -58,19 +74,19 @@ isolated function testQuery() returns error? {
 
 @test:Config {}
 isolated function testQuery2() returns error? {
-    json result = check readJson(value, `$.event.name`);
+    json result = check read(value, `$.event.name`);
     test:assertEquals(result, "Bond Movies");
 }
 
 @test:Config {}
 isolated function testQuery3() returns error? {
-    json result = check readJson(value, `$.event.${"name"}`);
+    json result = check read(value, `$.event.${"name"}`);
     test:assertEquals(result, "Bond Movies");
 }
 
 @test:Config {}
 isolated function testQuery4() returns error? {
-    json result = check readJson(value, `$.event.movies[?(@.rating>7)]`);
+    json result = check read(value, `$.event.movies[?(@.rating>7)]`);
     test:assertEquals(result, <json[]>[
       {
         "name": "GoldenEye",
@@ -88,7 +104,7 @@ isolated function testQuery4() returns error? {
 @test:Config {}
 isolated function testQuery5() returns error? {
   int a = 7;
-    json result = check readJson(value, `$.event.movies[?(@.rating>${a})]`);
+    json result = check read(value, `$.event.movies[?(@.rating>${a})]`);
     test:assertEquals(result, <json[]>[
         {
           "name": "GoldenEye",
@@ -105,18 +121,18 @@ isolated function testQuery5() returns error? {
 
 @test:Config {}
 function testQuery6() returns error? {
-    json result = check readJson(value, `$..movies.length()`);
+    json result = check read(value, `$..movies.length()`);
     test:assertEquals(result, 4);
 }
 
 @test:Config {}
 function testQuery7() returns error? {
-    json result = check readJson(value, `$.max($.event.movies..rating)`);
+    json result = check read(value, `$.max($.event.movies..rating)`);
     test:assertEquals(result, 7.8);
 }
 
 @test:Config {}
 function testQuery8() returns error? {
-    json result = check readJson(value, `$..rating.avg()`);
+    json result = check read(value, `$..rating.avg()`);
     test:assertEquals(result, 28.1/4);
 }

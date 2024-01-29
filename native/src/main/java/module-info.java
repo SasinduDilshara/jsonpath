@@ -20,8 +20,4 @@ module io.ballerina.xlibb.jsonpath {
     requires io.ballerina.runtime;
     requires io.ballerina.lang;
     requires json.path;
-    requires json.smart;
-    requires accessors.smart;
-    requires junit;
-    requires org.slf4j;
 }

@@ -1,3 +1,21 @@
+/*
+ * Copyright (c) 2024 WSO2 LLC. (http://www.wso2.com) All Rights Reserved.
+ *
+ * WSO2 LLC. licenses this file to you under the Apache License,
+ * Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied. See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+
 package io.ballerina.xlibb.jsonpath;
 
 import com.jayway.jsonpath.InvalidJsonException;
@@ -16,6 +34,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * Provides Ballerina specific function implementations of json-path.
+ */
 public class BJsonProvider extends AbstractJsonProvider {
     /**
      * Parse the given json string
@@ -185,7 +206,6 @@ public class BJsonProvider extends AbstractJsonProvider {
     }
 
     public Object unwrap(Object obj) {
-        //TODO: TypeUtils.getType
         if (obj == null) {
             return null;
         }
@@ -197,7 +217,6 @@ public class BJsonProvider extends AbstractJsonProvider {
         } else if (obj instanceof BString) {
             obj = StringUtils.getStringValue(obj);
             targetType = PredefinedTypes.TYPE_STRING;
-        //TODO: Check similar types
         } else if (obj instanceof BDecimal) {
             targetType = PredefinedTypes.TYPE_FLOAT;
         } else if (obj instanceof String) {
@@ -210,11 +229,9 @@ public class BJsonProvider extends AbstractJsonProvider {
             obj = ((Integer) obj).longValue();
             targetType = PredefinedTypes.TYPE_INT;
         } else if (obj instanceof BigDecimal) {
-            //TODO: ALL Decimal places
             targetType = PredefinedTypes.TYPE_JSON_DECIMAL;
         } else if (obj instanceof Double) {
             targetType = PredefinedTypes.TYPE_JSON_FLOAT;
-            //TODO: Check other types
         } else {
             targetType = PredefinedTypes.TYPE_ANY;
         }
