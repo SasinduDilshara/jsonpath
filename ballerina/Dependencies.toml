@@ -9,6 +9,21 @@ distribution-version = "2201.8.3"
 
 [[package]]
 org = "ballerina"
+name = "data.jsondata"
+version = "0.1.0"
+dependencies = [
+	{org = "ballerina", name = "jballerina.java"},
+	{org = "ballerina", name = "lang.float"},
+	{org = "ballerina", name = "lang.int"},
+	{org = "ballerina", name = "lang.object"},
+	{org = "ballerina", name = "test"}
+]
+modules = [
+	{org = "ballerina", packageName = "data.jsondata", moduleName = "data.jsondata"}
+]
+
+[[package]]
+org = "ballerina"
 name = "jballerina.java"
 version = "0.0.0"
 modules = [
@@ -79,20 +94,5 @@ dependencies = [
 ]
 modules = [
 	{org = "ballerina", packageName = "test", moduleName = "test"}
-]
-
-[[package]]
-org = "crates"
-name = "jsonpath"
-version = "1.0.2"
-dependencies = [
-	{org = "ballerina", name = "jballerina.java"},
-	{org = "ballerina", name = "lang.float"},
-	{org = "ballerina", name = "lang.int"},
-	{org = "ballerina", name = "lang.object"},
-	{org = "ballerina", name = "test"}
-]
-modules = [
-	{org = "crates", packageName = "jsonpath", moduleName = "jsonpath"}
 ]
 

@@ -235,6 +235,12 @@ public class BJsonProvider extends AbstractJsonProvider {
     private Object createJsonElement(final Object o) {
         if (o instanceof String) {
             return JsonUtils.convertToJson(StringUtils.fromString((String) o));
+        } else if (o instanceof List<?>) {
+            BArray jsonArray = (BArray) createArray();
+            for (Object element: ((List) o)) {
+                jsonArray.append(createJsonElement(element));
+            }
+            return JsonUtils.convertToJson(jsonArray);
         }
         return JsonUtils.convertToJson(o);
     }
